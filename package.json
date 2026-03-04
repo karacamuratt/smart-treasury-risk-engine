@@ -1,0 +1,15 @@
+{
+    "name": "smart-treasury-risk-engine",
+    "private": true,
+    "packageManager": "pnpm@9.1.0",
+    "scripts": {
+        "dev:api": "pnpm --filter @app/api dev",
+        "dev:listener": "pnpm --filter @app/listener dev",
+        "dev:worker": "pnpm --filter @app/worker dev",
+        "docker:up": "docker compose up -d",
+        "docker:down": "docker compose down -v"
+    },
+    "devDependencies": {
+        "@nestjs/cli": "^11.0.16"
+    }
+}
