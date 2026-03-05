@@ -1,0 +1,72 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  address   String   @unique
+  label     String?
+  createdAt DateTime @default(now())
+
+  transactions Transaction[]
+
+  @@index([address])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  txHash      String   @unique
+  blockNumber Int
+  from        String
+  to          String
+  value       String
+  gasUsed     String?
+  createdAt   DateTime @default(now())
+
+  walletId String?
+  wallet   Wallet? @relation(fields: [walletId], references: [id])
+
+  logs TransactionLog[]
+
+  @@index([txHash])
+  @@index([blockNumber])
+}
+
+model TransactionLog {
+  id            String   @id @default(uuid())
+  contract      String
+  topic0        String
+  topic1        String?
+  topic2        String?
+  data          String
+  createdAt     DateTime @default(now())
+
+  transactionId String
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+
+  @@index([contract])
+}
+
+model TokenHolding {
+  id        String   @id @default(uuid())
+  wallet    String
+  token     String
+  amount    String
+  updatedAt DateTime @updatedAt
+
+  @@index([wallet])
+}
+
+model RiskEvent {
+  id        String   @id @default(uuid())
+  wallet    String
+  severity  String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([wallet])
+}
