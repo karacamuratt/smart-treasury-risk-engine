@@ -3,7 +3,9 @@
     "private": true,
     "packageManager": "pnpm@9.1.0",
     "scripts": {
-        "dev:api": "pnpm --filter @app/api dev",
+        "start:dev": "pnpm --filter @packages/db run build && pnpm --dir ./apps/api run start:dev",
+        "start": "pnpm --filter @packages/db run build && pnpm --dir ./apps/api run start:dev",
+        "dev:api": "pnpm --filter @packages/db run build && pnpm --filter @app/api dev",
         "dev:listener": "pnpm --filter @app/listener dev",
         "dev:worker": "pnpm --filter @app/worker dev",
         "docker:up": "docker compose up -d",
