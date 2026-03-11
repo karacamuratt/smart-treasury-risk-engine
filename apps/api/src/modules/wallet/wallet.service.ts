@@ -6,9 +6,25 @@ import {
 import { getAddress } from 'ethers';
 import { prisma } from '@packages/db';
 import { CreateWalletDto } from './dto/create-wallet.dto';
+import { getEthBalance } from "@packages/blockchain";
 
 @Injectable()
 export class WalletService {
+    async getWalletBalance(address: string) {
+
+        const normalizedAddress = this.normalizeEthereumAddress(address);
+
+        /**
+         * Fetch balance directly from blockchain.
+         */
+        const balance = await getEthBalance(normalizedAddress);
+
+        return {
+            address: normalizedAddress,
+            balance
+        };
+    }
+
     async createWallet(dto: CreateWalletDto) {
         /**
          * Normalize and validate the incoming Ethereum address.

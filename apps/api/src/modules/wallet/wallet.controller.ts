@@ -29,4 +29,11 @@ export class WalletController {
          */
         return this.walletService.findWalletByAddress(address);
     }
+
+    @Get(':address/balance')
+    async getWalletBalance(
+        @Param('address') address: string
+    ) {
+        return this.walletService.getWalletBalance(address);
+    }
 }

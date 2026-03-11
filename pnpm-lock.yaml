@@ -23,6 +23,9 @@ importers:
       '@nestjs/platform-express':
         specifier: ^11.0.1
         version: 11.1.15(@nestjs/common@11.1.15(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.1.15)
+      '@packages/blockchain':
+        specifier: workspace:*
+        version: link:../../packages/blockchain
       '@packages/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -111,6 +114,12 @@ importers:
       typescript-eslint:
         specifier: ^8.20.0
         version: 8.56.1(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3)
+
+  packages/blockchain:
+    dependencies:
+      ethers:
+        specifier: ^6.16.0
+        version: 6.16.0
 
   packages/db:
     dependencies:
