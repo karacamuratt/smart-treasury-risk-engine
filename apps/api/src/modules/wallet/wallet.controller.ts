@@ -36,4 +36,13 @@ export class WalletController {
     ) {
         return this.walletService.getWalletBalance(address);
     }
+
+    @Get(':address/transfers')
+    async getWalletTransfers(
+        @Param('address') address: string
+    ) {
+
+        return this.walletService.scanWalletTransfers(address);
+
+    }
 }

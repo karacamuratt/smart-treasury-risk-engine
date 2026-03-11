@@ -7,9 +7,33 @@ import { getAddress } from 'ethers';
 import { prisma } from '@packages/db';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { getEthBalance } from "@packages/blockchain";
+import { scanERC20TransfersMock } from "@packages/blockchain";
 
 @Injectable()
 export class WalletService {
+    async scanWalletTransfers(address: string) {
+
+        const normalized = this.normalizeEthereumAddress(address);
+
+        /**
+         * We intentionally use mock transfer data here.
+         *
+         * This avoids real blockchain RPC calls during early
+         * development and keeps the system deterministic.
+         *
+         * Later we will replace this with the real scanner
+         * using provider.getLogs().
+         */
+
+        const transfers = await scanERC20TransfersMock(normalized);
+
+        return {
+            wallet: normalized,
+            transfers
+        };
+
+    }
+
     async getWalletBalance(address: string) {
 
         const normalizedAddress = this.normalizeEthereumAddress(address);
