@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { prisma } from '@packages/db';
+
 @Controller()
 export class AppController {
     @Get('/health')
@@ -16,7 +17,7 @@ export class AppController {
         const count = await prisma.wallet.count();
 
         return {
-            wallets: count
+            wallets: count,
         };
     }
 }
