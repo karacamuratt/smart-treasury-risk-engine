@@ -1,17 +1,15 @@
 {
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "module": "commonjs",
         "target": "ES2021",
         "declaration": true,
         "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "sourceMap": true,
         "outDir": "./dist",
-        "incremental": true,
         "baseUrl": ".",
         "paths": {
+            "@packages/db": [
+                "../../packages/db/dist"
+            ],
             "@packages/blockchain": [
                 "../../packages/blockchain/dist"
             ]
