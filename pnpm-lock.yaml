@@ -226,6 +226,15 @@ importers:
       '@nestjs/platform-express':
         specifier: ^11.0.1
         version: 11.1.15(@nestjs/common@11.1.15(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.1.15)
+      '@packages/blockchain':
+        specifier: workspace:*
+        version: link:../../packages/blockchain
+      '@packages/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@packages/queue':
+        specifier: workspace:*
+        version: link:../../packages/queue
       bullmq:
         specifier: ^5.73.0
         version: 5.73.0
@@ -311,6 +320,9 @@ importers:
 
   packages/blockchain:
     dependencies:
+      dotenv:
+        specifier: ^16.6.1
+        version: 16.6.1
       ethers:
         specifier: ^6.16.0
         version: 6.16.0
@@ -355,6 +367,9 @@ importers:
       bullmq:
         specifier: ^5.73.0
         version: 5.73.0
+      dotenv:
+        specifier: ^16.6.1
+        version: 16.6.1
       ioredis:
         specifier: ^5.10.1
         version: 5.10.1
