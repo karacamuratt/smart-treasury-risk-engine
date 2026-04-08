@@ -1,5 +1,6 @@
-import { provider } from "./provider";
 import { formatEther } from "ethers";
+import { getMockWalletBalanceWei } from "./mocks/mock-wallet-balances";
+import { isMockBlockchainMode, provider } from "./provider";
 
 /**
  * Fetches native ETH balance of a wallet address.
@@ -7,6 +8,16 @@ import { formatEther } from "ethers";
  * This function reads on-chain state using RPC.
  */
 export async function getEthBalance(address: string) {
+    if (isMockBlockchainMode()) {
+        const balanceWei = getMockWalletBalanceWei(address);
+
+        return {
+            wei: balanceWei,
+            eth: formatEther(BigInt(balanceWei)),
+            source: "mock",
+        };
+    }
+
     /**
      * getBalance queries the Ethereum node
      * and returns the balance in Wei (bigint).
@@ -23,5 +34,6 @@ export async function getEthBalance(address: string) {
     return {
         wei: balanceWei.toString(),
         eth: balanceEth,
+        source: "live",
     };
 }
