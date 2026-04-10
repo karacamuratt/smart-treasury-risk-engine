@@ -45,4 +45,11 @@ export class WalletController {
         return this.walletService.scanWalletTransfers(address);
 
     }
+
+    @Get(':address/transactions')
+    async getWalletTransactions(
+        @Param('address') address: string
+    ) {
+        return this.walletService.findWalletTransactions(address);
+    }
 }

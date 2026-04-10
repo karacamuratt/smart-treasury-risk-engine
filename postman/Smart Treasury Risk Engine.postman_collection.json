@@ -1,0 +1,483 @@
+{
+  "info": {
+    "_postman_id": "4fd74c73-a1d2-42f2-8fba-613a52d3d8a2",
+    "name": "Smart Treasury Risk Engine",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Portfolio/demo collection for the Smart Treasury Risk Engine project. It is optimized for local mock-mode testing with deterministic sample wallet addresses and a manually triggerable mock block scan."
+  },
+  "variable": [
+    {
+      "key": "demoWalletLabel",
+      "value": "Portfolio Demo Wallet"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health Checks",
+      "item": [
+        {
+          "name": "API Health",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('API is healthy', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.ok).to.eql(true);",
+                  "    pm.expect(data.service).to.eql('api');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiBaseUrl}}/health",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listener Health",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Listener is healthy', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.ok).to.eql(true);",
+                  "    pm.expect(data.service).to.eql('listener');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{listenerBaseUrl}}/health",
+              "host": [
+                "{{listenerBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Worker Health",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Worker is healthy', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.ok).to.eql(true);",
+                  "    pm.expect(data.service).to.eql('worker');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{workerBaseUrl}}/health",
+              "host": [
+                "{{workerBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Seed Demo Wallets",
+      "item": [
+        {
+          "name": "Create Demo Wallet Primary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Wallet created or already exists', function () {",
+                  "    pm.expect([201, 409]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"{{demoWalletPrimary}}\",\n  \"label\": \"{{demoWalletLabel}} Primary\"\n}"
+            },
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Demo Wallet Secondary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Wallet created or already exists', function () {",
+                  "    pm.expect([201, 409]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"{{demoWalletSecondary}}\",\n  \"label\": \"{{demoWalletLabel}} Secondary\"\n}"
+            },
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Demo Wallet Tertiary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Wallet created or already exists', function () {",
+                  "    pm.expect([201, 409]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"{{demoWalletTertiary}}\",\n  \"label\": \"{{demoWalletLabel}} Tertiary\"\n}"
+            },
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. API Demo Flow",
+      "item": [
+        {
+          "name": "List Wallets",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Wallet list loaded', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Wallet Count",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Wallet count loaded', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.wallets).to.be.a('number');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallet-count",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallet-count"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Demo Wallet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Wallet details loaded', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.address.toLowerCase()).to.eql(pm.environment.get('demoWalletPrimary').toLowerCase());",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets/{{demoWalletPrimary}}",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{{demoWalletPrimary}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Demo Wallet Balance",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Wallet balance loaded', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.balance.wei).to.be.a('string');",
+                  "    pm.expect(data.balance.eth).to.be.a('string');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets/{{demoWalletPrimary}}/balance",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{{demoWalletPrimary}}",
+                "balance"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Demo Wallet Mock Transfers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Mock transfer list loaded', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.wallet.toLowerCase()).to.eql(pm.environment.get('demoWalletPrimary').toLowerCase());",
+                  "    pm.expect(data.transfers).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets/{{demoWalletPrimary}}/transfers",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{{demoWalletPrimary}}",
+                "transfers"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Mock Scan Pipeline",
+      "item": [
+        {
+          "name": "Trigger Listener Mock Block Scan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Mock block scan queued', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.queued).to.eql(true);",
+                  "    pm.expect(data.mode).to.eql('mock');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"blockNumber\": {{mockBlockNumber}}\n}"
+            },
+            "url": {
+              "raw": "{{listenerBaseUrl}}/scan/mock-block",
+              "host": [
+                "{{listenerBaseUrl}}"
+              ],
+              "path": [
+                "scan",
+                "mock-block"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Demo Wallet Persisted Transactions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Persisted transactions endpoint responds', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.wallet.toLowerCase()).to.eql(pm.environment.get('demoWalletPrimary').toLowerCase());",
+                  "    pm.expect(data.transactions).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiBaseUrl}}/wallets/{{demoWalletPrimary}}/transactions",
+              "host": [
+                "{{apiBaseUrl}}"
+              ],
+              "path": [
+                "wallets",
+                "{{demoWalletPrimary}}",
+                "transactions"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

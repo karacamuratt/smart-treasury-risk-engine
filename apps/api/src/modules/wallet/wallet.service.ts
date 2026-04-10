@@ -112,6 +112,37 @@ export class WalletService {
         return wallet;
     }
 
+    async findWalletTransactions(address: string) {
+        const normalizedAddress = this.normalizeEthereumAddress(address);
+
+        const wallet = await prisma.wallet.findUnique({
+            where: {
+                address: normalizedAddress,
+            },
+            include: {
+                transactions: {
+                    orderBy: [
+                        { blockNumber: 'desc' },
+                        { createdAt: 'desc' },
+                    ],
+                    include: {
+                        logs: true,
+                    },
+                },
+            },
+        });
+
+        if (!wallet) {
+            throw new BadRequestException('Wallet not found.');
+        }
+
+        return {
+            wallet: wallet.address,
+            count: wallet.transactions.length,
+            transactions: wallet.transactions,
+        };
+    }
+
     /**
      * Validates and normalizes Ethereum addresses.
      *

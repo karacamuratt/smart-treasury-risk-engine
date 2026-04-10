@@ -2,16 +2,22 @@
     "name": "smart-treasury-risk-engine",
     "private": true,
     "packageManager": "pnpm@9.1.0",
+    "pnpm": {
+        "overrides": {
+            "@types/node": "22.19.13"
+        }
+    },
     "scripts": {
-        "start:dev": "pnpm --filter @packages/db run build && pnpm --dir ./apps/api run start:dev",
-        "start": "pnpm --filter @packages/db run build && pnpm --dir ./apps/api run start:dev",
-        "dev:api": "pnpm --filter @packages/db run build && pnpm --filter @app/api dev",
-        "dev:listener": "pnpm --filter @app/listener dev",
+        "start:dev": "pnpm --filter @packages/db run build && pnpm --filter @packages/blockchain run build && pnpm --filter @packages/queue run build && pnpm --dir ./apps/api run start:dev",
+        "start": "pnpm --filter @packages/db run build && pnpm --filter @packages/blockchain run build && pnpm --dir ./apps/api run start:dev",
+        "dev:api": "pnpm --filter @packages/db run build && pnpm --filter @packages/blockchain run build && pnpm --filter @app/api dev",
+        "dev:listener": "pnpm --filter @packages/blockchain run build && pnpm --filter @packages/queue run build && pnpm --filter @app/listener dev",
         "dev:worker": "pnpm --filter @app/worker dev",
         "docker:up": "docker compose up -d",
         "docker:down": "docker compose down -v"
     },
     "devDependencies": {
-        "@nestjs/cli": "^11.0.16"
+        "@nestjs/cli": "^11.0.16",
+        "typescript": "^5.9.3"
     }
 }
